@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	template="template/ui.xhtml">
+	<ui:define name="body">
+		<h:form id="formId">
+			<p:panelGrid style="width:50%; border: none;">
+				<p:row>
+					<p:column>
+						<p:outputLabel  value="Empleado: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="empleado-combo"
+								value="#{infoRegistryBean.idEmpleado}"
+								filter="true" 
+								filterMatchMode="contains"
+								style="width:52%;">
+								
+								<f:selectItem itemLabel="--Seleccione un usuario--"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{infoRegistryBean.listEmpleado}"
+									var="empleado"
+									itemLabel="#{empleado.name}"
+									itemValue="#{empleado.id}" />
+
+								<p:ajax event="change" update="cliente-combo"/>
+					</p:selectOneMenu>
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel  value="Periodo: " />
+					</p:column>
+					<p:column>
+						<p:calendar id="periodoCalendar"
+						showOn="button"
+						mask="true" navigator="true" readonlyInput="true"
+						value="#{infoRegistryBean.periodo}" locale="es"
+						pattern="MM-yyyy">
+						<p:ajax  update="idTable" />
+					</p:calendar>
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel  value="Cliente: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="cliente-combo"
+								value="#{infoRegistryBean.idClient}"
+								filter="true" 
+								filterMatchMode="contains"
+								style="width:52%;">
+								
+								<f:selectItem itemLabel="--Seleccione un cliente--"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{infoRegistryBean.listClient}"
+									var="client"
+									itemLabel="#{client.name}"
+									itemValue="#{client.id}" />
+								<p:ajax event="change" update="proyecto-combo"/>
+					</p:selectOneMenu>
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column>
+						<p:outputLabel  value="Proyecto: " />
+					</p:column>
+					<p:column>
+						<p:selectOneMenu id="proyecto-combo"
+								value="#{infoRegistryBean.idProject}"
+								filter="true" 
+								immediate="true"
+								filterMatchMode="contains"
+								style="width:52%;">
+								
+								<f:selectItem itemLabel="--Seleccione un proyecto--"
+									itemValue="#{null}" />
+								<f:selectItems
+									value="#{infoRegistryBean.listProject}"
+									var="project"
+									itemLabel="#{project.name}"
+									itemValue="#{project.id}" />
+<!-- 								<f:validator validatorId="lab.validatots.ValidaIdValidator" /> -->
+<!-- 								<f:attribute name="idProject"  -->
+<!-- 										value="#{infoRegistryBean.idProject}" /> -->
+										
+<!-- 								<f:attribute name="activa"  -->
+<!-- 										value="#{not empty param['idValidar']}" /> -->
+										
+<!-- 								<f:validator binding="#{validaIdValidator}" /> -->
+								
+					</p:selectOneMenu>
+					</p:column>
+					
+				</p:row>
+				<p:row>
+					<p:column colspan="2">
+						<p:dataTable var="fare" value="#{infoRegistryBean.listTarifa}" id="idTable">
+						    <p:column headerText="Tarifa">
+						        <h:outputText value="#{fare}" />
+						    </p:column>
+						 
+						    <p:column headerText="Horas">
+						        <h:inputText id="idHoras" value="{#infoRegistryBean.horas}" >
+
+								<f:attribute name="timeFrame"
+									value="#{infoRegistryBean.periodo}" />
+									
+								<f:validator validatorId="validaIdValidator" />
+						        </h:inputText>
+						    </p:column>
+						    
+						</p:dataTable>
+					</p:column>
+				</p:row>
+				
+				
+				<p:row>
+					<p:column colspan="2" style="text-align: center">
+						<p:commandButton id="idValidar"
+							value="Validar"
+							actionListener="#{infoRegistryBean.saveValues}" 
+							update="@form">
+							
+					</p:commandButton>
+					</p:column>
+				</p:row>
+				
+			</p:panelGrid>
+			<p:dataTable id="t2" 
+						var="tab" 
+						value="#{infoRegistryBean.listEmpleado}"
+                        filteredValue="#{infoRegistryBean.listEmpleadoF}">
+                        
+                        <p:column filterBy="#{tab.id}" headerText="Id"  filterMatchMode="contains">
+                            <h:outputText value="#{tab.id}" />
+                        </p:column>
+                        
+                        <p:column filterBy="#{tab.name}" headerText="Nombre"  filterMatchMode="contains">
+                            <h:outputText value="#{tab.name}" />
+                        </p:column>   
+                        
+                        
+                    </p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>
