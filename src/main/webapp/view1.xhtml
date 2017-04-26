@@ -44,7 +44,7 @@
 						mask="true" navigator="true" readonlyInput="true"
 						value="#{infoRegistryBean.periodo}" locale="es"
 						pattern="MM-yyyy">
-						<p:ajax  update="idTable" />
+						<p:ajax  />
 					</p:calendar>
 					</p:column>
 				</p:row>
@@ -104,27 +104,6 @@
 					</p:column>
 					
 				</p:row>
-				<p:row>
-					<p:column colspan="2">
-						<p:dataTable var="fare" value="#{infoRegistryBean.listTarifa}" id="idTable">
-						    <p:column headerText="Tarifa">
-						        <h:outputText value="#{fare}" />
-						    </p:column>
-						 
-						    <p:column headerText="Horas">
-						        <h:inputText id="idHoras" value="{#infoRegistryBean.horas}" >
-
-								<f:attribute name="timeFrame"
-									value="#{infoRegistryBean.periodo}" />
-									
-								<f:validator validatorId="validaIdValidator" />
-						        </h:inputText>
-						    </p:column>
-						    
-						</p:dataTable>
-					</p:column>
-				</p:row>
-				
 				
 				<p:row>
 					<p:column colspan="2" style="text-align: center">
